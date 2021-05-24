@@ -1,0 +1,216 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: -webkit-linear-gradient(bottom, rgba(0, 173, 239, 1) 0%, rgba(0, 122, 202, 1) 100%) no-repeat fixed;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 18px;
+    padding-top: 78px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Segoe UI Light", sans-serif;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+.monitor-container {
+    /*width: 100%;
+    height: 100%;*/
+}
+
+.monitor-container > .well {
+
+}
+
+.well-end {
+    min-height: 558px;
+}
+
+.well-end div.logo-big {
+    margin: -32px auto 64px auto;
+    width: 512px;
+    height: 192px;
+    background: transparent url("../img/logo-big.png");
+    -webkit-background-size: 100%;
+}
+
+.intro.well-lg {
+    /*min-height: 636px;*/
+}
+
+.intro.well {
+    margin-top: 0;
+    padding: 64px;
+}
+
+.intro div.slogan {
+    width: 416px;
+    height: 48px;
+    margin: 16px auto;
+    background: transparent url("../img/slogan.png") no-repeat;
+    -webkit-background-size: 100%;
+}
+
+.intro div.logo-big {
+    margin: -32px auto 64px auto;
+    width: 512px;
+    height: 192px;
+    background: transparent url("../img/logo-big.png");
+    -webkit-background-size: 100%;
+}
+
+.intro .btn {
+    padding: 16px 32px;
+    font-size: 1em;
+}
+
+div.logo {
+    width: 320px;
+    height: 112px;
+    margin-left: -34px;
+    background: transparent url("../img/logo.png");
+}
+
+h1.lbl-intro {
+    margin: 0;
+    font-family: "Segoe UI Light", sans-serif;
+    font-weight: normal;
+    color: #CC9000;
+}
+
+.navbar {
+    padding: 8px 16px;
+}
+
+.navbar .nav-pills a {
+    padding: 8px 16px;
+    font-size: 18px;
+    margin: 0 32px;
+}
+
+.btn-actions .btn {
+    /*
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
+        padding: 8px 16px;
+    */
+}
+
+#options {
+    /*padding: 32px;*/
+}
+
+#options .label {
+    font-size: 16px;
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 4px;
+    white-space: normal;
+}
+
+/*
+.col-xs-4 .list-group {
+    border-radius: 10px;
+    border: 8px solid rgba(255, 255, 255, 0.3);
+}
+*/
+
+.panel p {
+    font-size: 18px;
+}
+
+.panel h2 {
+    color: #000000;
+}
+
+.rules h1,
+.rules h2,
+.rules h3 {
+    color: black;
+    margin: 2em 0 1em 0;
+}
+
+.affix {
+    /*border: 8px solid rgba(255, 255, 255, 0.3);*/
+    background: white;
+    padding: 8px 32px;
+    width: 100%;
+    top: 58px;
+    left: 0;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+}
+
+.affix label {
+    font-size: 21px;
+    line-height: 55px;
+    white-space: nowrap;
+}
+
+.affix .navbar-btn {
+    margin-top: 0;
+    padding: 0 8px;
+    white-space: normal;
+    margin-bottom: 0;
+    width: 140px;
+    min-height: 60px;
+    line-height: 1.2;
+    font-size: 12px;
+    text-align: left;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.affix .btn.disabled,
+.affix .btn[disabled] {
+    text-shadow: 0 1px 0 white;
+}
+
+.affix .navbar-btn i.fa {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.affix .navbar-btn span {
+    padding-left: 8px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/*
+.affix .btn-lg,
+.affix .list-group-item {
+    font-size: 14px;
+}
+*/
+.list-group small {
+    display: inline-block;
+    width: 11em;
+}
+
+.list-group .active small {
+    color: #CCC;
+}
+
+.table-number {
+    width: 3em;
+    text-align: right;
+    margin: 0;
+}
+
+.navbar-fixed-top,
+.affix {
+    min-width: 1280px;
+}
+
+.nav-justified > li {
+    display: table-cell !important;
+    width: 1% !important;
+}

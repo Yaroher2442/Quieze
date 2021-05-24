@@ -1,0 +1,545 @@
+<div class="question">
+	<div class="modal fade" id="questionModal" role="dialog" ng-show="questionState.status==='question:show' || expressQuestionShow"
+		 data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p class="modal-title text-center">Раунд {{currentStep.dumId + 1}}/{{currentStep.totalDums}}, Вопрос
+						{{currentStep.roundId + 1}}/{{currentStep.totalRounds}}</p>
+				</div>
+				<div class="modal-body text-center"><h1>{{question.questions[question.currentIndex].question}}</h1></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="question well well-lg" ng-show="questionState.status==='questionStarted'">
+
+	<div ng-hide="questionState.showResults || questionState.showCorrectAnswersExpress">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<div class="row">
+				<div class="col-xs-6">
+					Раунд {{currentStep.dumId + 1}}/{{currentStep.totalDums}}, Вопрос
+					{{currentStep.roundId + 1}}/{{currentStep.totalRounds}},
+					Время: {{questionState.remainSeconds}}
+				</div>
+				<!--<div class="col-xs-6">
+					Общее время {{questionState.remainSecondsToChangeQuestion}}
+				</div>-->
+				<div class="col-xs-6">
+					<div class="progress">
+					<div class="progress-bar" style="width: {{questionState.remainPercents}}%"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body"><!-- TODO: 'Вопрос x из y' should not used always -->
+			<h3 class="text-center">
+				Вопрос {{question.currentIndex + 1}} из {{question.questions.length}}:
+				{{question.questions[question.currentIndex].question}}</h3>
+		</div><!-- TODO: simplify question.questions[question.currentIndex] -->
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="answer-button-placeholder">
+				<button type="button" class="btn btn-primary btn-block"
+						ng-class="{disabled : questionState.areOptionsDisabled, 'btn-pressed' : questionState.selected == 1, 'btn-success' : questionState.correctOptions[question.currentIndex] == 1}"
+						ng-click="chooseAnswer(1)"
+						ng-disabled="questionState.areOptionsDisabled"
+						ng-hide="questionState.hideOption[1]">{{question.questions[question.currentIndex].options[1]}}
+				</button>
+			</div>
+			<div class="answer-button-placeholder">
+				<button type="button" class="btn btn-primary btn-block"
+						ng-class="{disabled : questionState.areOptionsDisabled, 'btn-pressed' : questionState.selected == 3, 'btn-success' : questionState.correctOptions[question.currentIndex] == 3}"
+						ng-click="chooseAnswer(3)"
+						ng-disabled="questionState.areOptionsDisabled"
+						ng-hide="questionState.hideOption[3]">{{question.questions[question.currentIndex].options[3]}}
+				</button>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div class="answer-button-placeholder">
+				<button type="button" class="btn btn-primary btn-block"
+						ng-class="{disabled : questionState.areOptionsDisabled, 'btn-pressed' : questionState.selected == 2, 'btn-success' : questionState.correctOptions[question.currentIndex] == 2}"
+						ng-click="chooseAnswer(2)"
+						ng-disabled="questionState.areOptionsDisabled"
+						ng-hide="questionState.hideOption[2]">{{question.questions[question.currentIndex].options[2]}}
+				</button>
+			</div>
+			<div class="answer-button-placeholder">
+				<button type="button" class="btn btn-primary btn-block"
+						ng-class="{disabled : questionState.areOptionsDisabled, 'btn-pressed' : questionState.selected == 4, 'btn-success' : questionState.correctOptions[question.currentIndex] == 4}"
+						ng-click="chooseAnswer(4)"
+						ng-disabled="questionState.areOptionsDisabled"
+						ng-hide="questionState.hideOption[4]">{{question.questions[question.currentIndex].options[4]}}
+				</button>
+			</div>
+		</div>
+	</div>
+	<!--<div class="row">
+		<div class="col-xs-12">
+			<div class="answer-button-placeholder">
+				<button type="button" class="btn btn-primary btn-block"
+						ng-class="{disabled : questionState.areOptionsDisabled, 'btn-pressed' : questionState.selected == 0, 'btn-success' : questionState.correctOptions[question.currentIndex] == 0}"
+					ng-click="chooseAnswer(0)"
+					ng-disabled="questionState.areOptionsDisabled"
+					ng-hide="questionState.hideOption[0]">{{question.questions[question.currentIndex].options[0]}}
+			</button>
+			</div>
+		</div>
+	</div> -->
+<!-- 				<button type="button" class="btn btn-primary btn-lg" style="position: absolute; z-index: 1100; top: 0; left: 76%; border: none;"
+						ng-click="removeWrongOption()"
+						ng-disabled="questionState.wrongOptionsRemoved > 0 || questionState.hintsAvailable == 0 || questionState.areOptionsDisabled">
+				-1 <br /> неверный ответ
+				<span class="badge badge-lg">{{questionState.hintsAvailable}}</span>
+			</button>
+ -->
+		<div class="row remove-wrong-answer-buttons">
+			<div class="col-xs-12">
+				<button type="button" class="btn btn-block"
+						ng-click="removeWrongOption()"
+						ng-disabled="questionState.hintsAvailable == 0 || questionState.areOptionsDisabled || Math.min(questionState.hintsAvailable, (2 - questionState.wrongOptionsRemoved)) <= 0">
+				Убрать один неверный ответ
+				<!--<span class="badge badge-lg">{{questionState.hintsAvailable}}</span> -->
+				<span class="badge badge-lg">{{Math.min(questionState.hintsAvailable, (2 - questionState.wrongOptionsRemoved))}}</span>
+			</button>
+			</div>
+			<!-- <div class="col-xs-6">
+				<button type="button" class="btn btn-block"
+						ng-click="removeWrongOption()"
+						ng-disabled="questionState.wrongOptionsRemoved > 0 || questionState.hintsAvailable == 0 || questionState.areOptionsDisabled">
+				Убрать один неверный ответ
+				<span class="badge badge-lg">{{questionState.hintsAvailable}}</span>
+			</button>
+		</div>
+			<div class="col-xs-6">
+				<button type="button" class="btn btn-block"
+						ng-click="removeWrongOption()"
+						ng-disabled="questionState.wrongOptionsRemoved < 1 || questionState.wrongOptionsRemoved > 1 || questionState.hintsAvailable == 0 || questionState.areOptionsDisabled">
+				Убрать второй неверный ответ
+				<span class="badge badge-lg">{{questionState.hintsAvailable}}</span>
+			</button>
+		</div> -->
+	</div>
+	</div>
+
+
+	<!-- TODO: possible to reuse code above for correct answers, but it will make code unreadable -->
+	<div class="question page-bg page-border page-inner" ng-show="questionState.showCorrectAnswersExpress && !questionState.showResults">
+		<div ng-repeat="(index, nextQuestion) in question.questions">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h3 class="text-center">
+						Вопрос {{index + 1}} из {{question.questions.length}}:
+						{{nextQuestion.question}}</h3>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-1"></div>
+				<div class="col-xs-5">
+					<button type="button" class="btn btn-primary btn-block"
+							ng-class="{disabled : true, 'btn-pressed' : questionState.selectedArray[index] == 1, 'btn-success' : questionState.correctOptions[index] == 1}">
+						{{nextQuestion.options[1]}}
+					</button>
+					<button type="button" class="btn btn-primary btn-block"
+							ng-class="{disabled : true, 'btn-pressed' : questionState.selectedArray[index] == 3, 'btn-success' : questionState.correctOptions[index] == 3}">
+						{{nextQuestion.options[3]}}
+					</button>
+				</div>
+				<div class="col-xs-5">
+					<button type="button" class="btn btn-primary btn-block"
+							ng-class="{disabled : true, 'btn-pressed' : questionState.selectedArray[index] == 2, 'btn-success' : questionState.correctOptions[index] == 2}">
+						{{nextQuestion.options[2]}}
+					</button>
+					<button type="button" class="btn btn-primary btn-block"
+							ng-class="{disabled : true, 'btn-pressed' : questionState.selectedArray[index] == 4, 'btn-success' : questionState.correctOptions[index] == 4}">
+						{{nextQuestion.options[4]}}
+					</button>
+				</div>
+				<div class="col-xs-1"></div>
+			</div>
+			<!-- <div class="row"> -->
+				<!-- <div class="col-xs-3"></div> -->
+				<!-- <div class="col-xs-6"> -->
+					<!-- <button type="button" class="btn btn-primary btn-block" -->
+							<!-- ng-class="{disabled : true, 'btn-pressed' : questionState.selectedArray[index] == 0, 'btn-success' : questionState.correctOptions[index] == 0}"> -->
+						<!-- {{nextQuestion.options[0]}} -->
+					<!-- </button> -->
+				<!-- </div> -->
+				<!-- <div class="col-xs-3"></div> -->
+			<!-- </div> -->
+		</div>
+	</div>
+
+	<div ng-show="questionState.showResults">
+		<div class="panel-heading text-center">
+			Раунд {{currentStep.dumId + 1}}/{{currentStep.totalDums}}, Вопрос
+			{{currentStep.roundId + 1}}/{{currentStep.totalRounds}}
+		</div>
+		<table class="table table-condensed">
+			<thead>
+			<tr>
+				<th style="width: 60%"><label class="table-number">Стол</label>&nbsp;<i
+						class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;Команда
+				</th>
+				<th style="text-align: right; width: 30%">Вопрос</th>
+				<th style="text-align: right; width: 5%">Итог</th>
+				<th style="text-align: right; width: 5%">Место</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="answer in questionState.answers | orderBy: '-totalScore'"
+				ng-class="{success : answer.isCorrect, danger: !answer.isCorrect, hide: currentTeamId != answer.teamId}">
+				<td>
+					<label class="table-number" ng-bind-html="answer.table | fixed:3"/>&nbsp;<i
+						class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{answer.name}}
+				</td>
+				<td style="text-align: right">{{answer.lastRoundScore}}&nbsp;
+					<span class="label label-info hide"
+						  ng-show="answer.isCorrect || answer.formula.turbo"
+						  ng-click="openCalculationDetailsModal(answer)">
+						Детали расчета >>
+					</span>
+				</td>
+				<td style="text-align: right"><strong>{{answer.totalScore}}</strong></td>
+				<td style="text-align: right">{{$index + 1}}</td>
+			</tr>
+			</tbody>
+		</table>
+
+		<table class="calc-details" ng-show="questionState.details.isCorrect && !questionState.details.formula.turbo && questionState.details.formula.extendedBase.length == 1">
+			<tr class="details-block-title">
+				<td>Базовые баллы</td>
+				<td ng-show="questionState.details.formula.extendedBase[0].hints"></td>
+				<td ng-show="questionState.details.formula.extendedBase[0].hints">Подсказки</td>
+				<td ng-show="questionState.details.formula.express"></td>
+				<td ng-show="questionState.details.formula.express">БЛИЦ</td>
+				<td ng-show="questionState.details.formula.oneForAll"></td>
+				<td ng-show="questionState.details.formula.oneForAll">ОДИН ЗА ВСЕХ</td>
+				<td ng-show="questionState.details.formula.correctSeries"></td>
+				<td ng-show="questionState.details.formula.correctSeries">3 верных ответа подряд</td>
+				<td ng-show="questionState.details.formula.ternaryDumDum"></td>
+				<td ng-show="questionState.details.formula.ternaryDumDum">Единственная команда, ответившая правильно</td>
+				<td ng-show="questionState.details.formula.zeitnot"></td>
+				<td ng-show="questionState.details.formula.zeitnot">Ставка на команду "{{questionState.details.formula.zeitnot.partnerTeamName}}"</td>
+				<td class="sum"></td>
+				<td class="sum">Итого</td>
+			</tr>
+			<tr class="details-block-num">
+				<td>{{questionState.details.formula.extendedBase[0].base}}</td>
+				<td ng-show="questionState.details.formula.extendedBase[0].hints" class="details-block-mult">x</td>
+				<td ng-show="questionState.details.formula.extendedBase[0].hints">{{questionState.details.formula.extendedBase[0].hints.multiplier}}</td>
+				<td ng-show="questionState.details.formula.express" class="details-block-mult">x</td>
+				<td ng-show="questionState.details.formula.express">{{questionState.details.formula.express.multiplier}}</td>
+				<td ng-show="questionState.details.formula.oneForAll" class="details-block-mult">x</td>
+				<td ng-show="questionState.details.formula.oneForAll">{{questionState.details.formula.oneForAll.multiplier}}</td>
+				<td ng-show="questionState.details.formula.correctSeries" class="details-block-mult">x</td>
+				<td ng-show="questionState.details.formula.correctSeries">{{questionState.details.formula.correctSeries.multiplier}}</td>
+				<td ng-show="questionState.details.formula.ternaryDumDum" class="details-block-mult">x</td>
+				<td ng-show="questionState.details.formula.ternaryDumDum">{{questionState.details.formula.ternaryDumDum.multiplier}}</td>
+				<td ng-show="questionState.details.formula.zeitnot">+</td>
+				<td ng-show="questionState.details.formula.zeitnot">{{questionState.details.formula.zeitnot.score}}</td>
+				<td class="details-block-mult sum">=</td>
+				<td class="sum">{{questionState.details.lastRoundScore}}</td>
+			</tr>
+			<tr class="details-block-sub">
+				<td>{{questionState.details.formula.extendedBase[0].base | declOfNum: ['балл', 'балла', 'баллов']}}</td>
+				<td ng-show="questionState.details.formula.extendedBase[0].hints"></td>
+				<td ng-show="questionState.details.formula.extendedBase[0].hints"></td>
+				<td ng-show="questionState.details.formula.express"></td>
+				<td ng-show="questionState.details.formula.express"></td>
+				<td ng-show="questionState.details.formula.oneForAll"></td>
+				<td ng-show="questionState.details.formula.oneForAll"></td>
+				<td ng-show="questionState.details.formula.correctSeries"></td>
+				<td ng-show="questionState.details.formula.correctSeries"></td>
+				<td ng-show="questionState.details.formula.ternaryDumDum"></td>
+				<td ng-show="questionState.details.formula.ternaryDumDum"></td>
+				<td ng-show="questionState.details.formula.zeitnot"></td>
+				<td ng-show="questionState.details.formula.zeitnot">{{questionState.details.formula.zeitnot.score | declOfNum: ['балл', 'балла', 'баллов']}}</td>
+				<td class="sum"></td>
+				<td class="sum">{{questionState.details.lastRoundScore | declOfNum: ['балл', 'балла', 'баллов']}}</td>
+			</tr>
+		</table>
+	
+	
+
+		<table class="calc-details" ng-show="questionState.details.formula.extendedBase.length > 1">
+			<tr class="details-block-title">
+				<td class="no-max-width">Базовые баллы</td>
+				<td ng-show="questionState.details.formula.express"></td>
+				<td ng-show="questionState.details.formula.express">БЛИЦ</td>
+				<td ng-show="questionState.details.formula.oneForAll"></td>
+				<td ng-show="questionState.details.formula.oneForAll">ОДИН ЗА ВСЕХ</td>
+				<td ng-show="questionState.details.formula.correctSeries"></td>
+				<td ng-show="questionState.details.formula.correctSeries">3 верных ответа подряд</td>
+				<td ng-show="questionState.details.formula.ternaryDumDum"></td>
+				<td ng-show="questionState.details.formula.ternaryDumDum">Единственная команда, ответившая правильно</td>
+				<td ng-show="questionState.details.formula.zeitnot"></td>
+				<td ng-show="questionState.details.formula.zeitnot">Ставка на команду "{{questionState.details.formula.zeitnot.partnerTeamName}}"</td>
+				<td class="sum"></td>
+				<td class="sum">Итого</td>
+			</tr>
+			<tr class="details-block-num">
+				<td class="no-max-width">{{questionState.details.basePoints}}</td>
+				<td ng-show="questionState.details.formula.express" class="details-block-mult">x</td>
+				<td ng-show="questionState.details.formula.express">{{questionState.details.formula.express.multiplier}}</td>
+				<td ng-show="questionState.details.formula.oneForAll" class="details-block-mult">x</td>
+				<td ng-show="questionState.details.formula.oneForAll">{{questionState.details.formula.oneForAll.multiplier}}</td>
+				<td ng-show="questionState.details.formula.correctSeries" class="details-block-mult">x</td>
+				<td ng-show="questionState.details.formula.correctSeries">{{questionState.details.formula.correctSeries.multiplier}}</td>
+				<td ng-show="questionState.details.formula.ternaryDumDum" class="details-block-mult">x</td>
+				<td ng-show="questionState.details.formula.ternaryDumDum">{{questionState.details.formula.ternaryDumDum.multiplier}}</td>
+				<td ng-show="questionState.details.formula.zeitnot">+</td>
+				<td ng-show="questionState.details.formula.zeitnot">{{questionState.details.formula.zeitnot.score}}</td>
+				<td class="details-block-mult sum">=</td>
+				<td class="sum">{{questionState.details.lastRoundScore}}</td>
+			</tr>
+			<tr class="details-block-sub">
+				<td class="nowrap no-max-width">{{questionState.details.explanation}}</td>
+				<td ng-show="questionState.details.formula.express"></td>
+				<td ng-show="questionState.details.formula.express"></td>
+				<td ng-show="questionState.details.formula.oneForAll"></td>
+				<td ng-show="questionState.details.formula.oneForAll"></td>
+				<td ng-show="questionState.details.formula.correctSeries"></td>
+				<td ng-show="questionState.details.formula.correctSeries"></td>
+				<td ng-show="questionState.details.formula.ternaryDumDum"></td>
+				<td ng-show="questionState.details.formula.ternaryDumDum"></td>
+				<td ng-show="questionState.details.formula.zeitnot"></td>
+				<td ng-show="questionState.details.formula.zeitnot">{{questionState.details.formula.zeitnot.score | declOfNum: ['балл', 'балла', 'баллов']}}</td>
+				<td class="sum"></td>
+				<td class="sum">{{questionState.details.lastRoundScore | declOfNum: ['балл', 'балла', 'баллов']}}</td>
+			</tr>
+		</table>
+
+		<table class="calc-details" ng-show="questionState.details.formula.turbo && questionState.details.formula.turbo.isCorrect">
+			<tr class="details-block-title">
+				<td>Ваши баллы до</td>
+				<td></td>
+				<td></td>
+				<td class="sum"></td>
+				<td class="sum">Итого</td>
+			</tr>
+			<tr class="details-block-num">
+				<td>{{questionState.details.totalScore / questionState.details.formula.turbo.multiplier}}</td>
+				<td class="details-block-mult">x</td>
+				<td>{{questionState.details.formula.turbo.multiplier}}</td>
+				<td class="details-block-mult sum">=</td>
+				<td class="sum">{{questionState.details.totalScore}}</td>
+			</tr>
+			<tr class="details-block-sub">
+				<td>балла</td>
+				<td></td>
+				<td></td>
+				<td class="sum"></td>
+				<td class="sum">балла</td>
+			</tr>
+		</table>
+
+		<table class="calc-details" ng-show="questionState.details.formula.turbo && questionState.details.formula.turbo.isCorrect">
+			<tr class="details-block-title">
+				<td>Ваши баллы до</td>
+				<td></td>
+				<td></td>
+				<td class="sum"></td>
+				<td class="sum">Итого</td>
+			</tr>
+			<tr class="details-block-num">
+				<td>{{questionState.details.totalScore / questionState.details.formula.turbo.multiplier}}</td>
+				<td class="details-block-mult">x</td>
+				<td>{{questionState.details.formula.turbo.multiplier}}</td>
+				<td class="details-block-mult sum">=</td>
+				<td class="sum">{{questionState.details.totalScore}}</td>
+			</tr>
+			<tr class="details-block-sub">
+				<td>балла</td>
+				<td></td>
+				<td></td>
+				<td class="sum"></td>
+				<td class="sum">балла</td>
+			</tr>
+		</table>
+
+		<table class="calc-details" ng-show="questionState.details.formula.turbo && !questionState.details.formula.turbo.isCorrect">
+			<tr class="details-block-title">
+				<td>Ваши баллы до</td>
+				<td></td>
+				<td></td>
+				<td class="sum"></td>
+				<td class="sum">Итого</td>
+			</tr>
+			<tr class="details-block-num">
+				<td>{{questionState.details.totalScore * questionState.details.formula.turbo.demultiplier}}</td>
+				<td class="details-block-mult">/</td>
+				<td>{{questionState.details.formula.turbo.demultiplier}}</td>
+				<td class="details-block-mult sum">=</td>
+				<td class="sum">{{questionState.details.totalScore}}</td>
+			</tr>
+			<tr class="details-block-sub">
+				<td>балла</td>
+				<td></td>
+				<td></td>
+				<td class="sum"></td>
+				<td class="sum">балла</td>
+			</tr>
+		</table>
+	</div>
+
+
+
+
+	<!--
+		"formula":{
+			"extendedBase":[
+				{"base":3,
+				 "allAnswersWrong":{multiplier: 1.5}
+				},
+				{"base":2,"hints":{"used":1,"multiplier":0.75}},
+				{"base":2,"hints":{"used":2,"multiplier":0.5}}
+			],
+			"express":{"multiplier":3},
+			"oneForAll":{"membersCount":1,"multiplier":1},
+			"correctSeries":{"count":2,"multiplier":1.1},
+			"ternaryDumDum":{"multiplier":3},
+			"hiEnd":{
+				"info":{
+					"topTeam":{"name":"3","score":0},
+					"lastTeam":{"name":"1","score":17},
+					"lastButOneTeam":{"name":"2","score":32}
+				},
+				"multiplier":5
+			},
+			"zeitnot":{
+				"partnerTeam":{"name":"2","score":160},
+				"jackPot":{"jackPotSize":5,"teamsSuccess":1,"scorePerTeam":5}
+			}
+		},
+	-->
+
+	<div class="modal fade" id="calculationDetailsModal" tabindex="-1" role="dialog"
+		 data-keyboard="false" data-backdrop="static"
+		 aria-labelledby="calculationDetailsModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title" id="calculationDetailsModalLabel">
+						Детали расчета для <b>{{details.table}}</b>&nbsp;<i
+							class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{details.name}}
+					</h1>
+				</div>
+				<div class="modal-body form-horizontal">
+					<div ng-hide="details.formula.turbo">
+						<span class="calculation-description">За Вопрос набрано:&nbsp;</span>
+						<b>{{details.lastRoundScore}}&nbsp;=</b></br>
+
+						<b>(</b></br>
+						<span ng-repeat="(index, next) in details.formula.extendedBase">
+							<span class="calculation-base">{{next.base}}</span>
+							<span class="calculation-description">&nbsp;- базовые очки за вопрос</span>
+
+							<span ng-show="next.hints">
+								</br>
+								<span class="calculation-hints">*&nbsp;{{next.hints.multiplier}}</span>
+								<span class="calculation-description">&nbsp;- использовано {{next.hints.used}} подсказок</span>
+							</span>
+
+							<span ng-show="next.allAnswersWrong">
+								</br>
+								<span class="calculation-allAnswersWrong">*&nbsp;{{next.allAnswersWrong.multiplier}}</span>
+								<span class="calculation-description">&nbsp;- правильным является ответ «ПРАВИЛЬНОГО ОТВЕТА НЕТ»</span>
+							</span>
+							<span ng-show="index < details.formula.extendedBase.length - 1">
+								</br>
+								<b>+</b>
+							</span>
+						</span>
+						</br><b>)</b></br>
+
+						<span ng-show="details.formula.express">
+							<span class="calculation-express">*&nbsp;{{details.formula.express.multiplier}}</span>
+							<span class="calculation-description">&nbsp;- успешно разыгранный «Скородум БЛИЦ»</span>
+							</br>
+						</span>
+
+						<span ng-show="details.formula.oneForAll">
+							<span class="calculation-oneForAll">*&nbsp;{{details.formula.oneForAll.multiplier}}</span>
+							<span class="calculation-description">&nbsp;- «ОДИН ЗА ВСЕХ»<!--, количество игроков Команды: {{details.formula.oneForAll.membersCount}}--></span>
+							</br>
+						</span>
+
+						<span ng-show="details.formula.correctSeries">
+							<span class="calculation-correctSeries">*&nbsp;{{details.formula.correctSeries.multiplier}}</span>
+							<span class="calculation-description">&nbsp;- серия из {{details.formula.correctSeries.count}} правильных ответов</span>
+							</br>
+						</span>
+
+						<span ng-show="details.formula.ternaryDumDum">
+							<span class="calculation-ternaryDumDum">*&nbsp;{{details.formula.ternaryDumDum.multiplier}}</span>
+							<span class="calculation-description">&nbsp;- «ТРОЙНОЙ Скородум», Команда - единственная, ответившая правильно</span>
+							</br>
+						</span>
+
+						<span ng-show="details.formula.hiEnd">
+							<span class="calculation-hiEnd">*&nbsp;{{details.formula.hiEnd.multiplier}}</span>
+
+							<span ng-show="details.formula.hiEnd.multiplier === 1">
+								<span class="calculation-description">&nbsp;- «Скородум HI-END» не разыгран.</span>
+							</span>
+							<span ng-show="details.formula.hiEnd.multiplier != 1">
+								<span class="calculation-description">&nbsp;- «Скородум HI-END» разыгран.</span>
+							</span>
+
+							<span class="calculation-description">&nbsp;Лидер "{{details.formula.hiEnd.info.topTeam.name}}" набрал {{details.formula.hiEnd.info.topTeam.score}}.</span>
+							<span class="calculation-description">&nbsp;
+								Противостояли "{{details.formula.hiEnd.info.lastTeam.name}}" ({{details.formula.hiEnd.info.lastTeam.score}})
+								и "{{details.formula.hiEnd.info.lastButOneTeam.name}}" ({{details.formula.hiEnd.info.lastButOneTeam.score}})
+							</span>
+							</br>
+						</span>
+
+						<span ng-show="details.formula.zeitnot">
+							<span class="calculation-zeitnot">+&nbsp;{{details.formula.zeitnot.partnerTeam.score}}</span>
+							<span class="calculation-description">&nbsp;- баллы Команды "{{details.formula.zeitnot.partnerTeam.name}}", на которую обявлена «СТАВКА»</span>
+							</br>
+
+							<span class="calculation-zeitnot">+&nbsp;{{details.formula.zeitnot.jackPot.scorePerTeam}}</span>
+							<span class="calculation-description">&nbsp;
+								- Банк «СТАВКИ» ({{details.formula.zeitnot.jackPot.jackPotSize}})
+								был поделен между {{details.formula.zeitnot.jackPot.teamsSuccess}} командами
+							</span>
+						</span>
+					</div>
+					<div ng-show="details.formula.turbo">
+						<div ng-show="details.formula.turbo.isCorrect">
+							<span class="calculation-description">«Скородум Турбо» разыгран.</span>
+							<br>
+							<span class="calculation-description">
+								Все очки умножены на {{details.formula.turbo.multiplier}}
+							</span>
+						</div>
+						<div ng-show="!details.formula.turbo.isCorrect">
+							<span class="calculation-description">«Скородум Турбо» не разыгран.</span>
+							<br>
+							<span class="calculation-description">
+								Все очки разделены на {{details.formula.turbo.demultiplier}}
+							</span>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="modal-footer form-horizontal">
+					<button type="button" class="btn btn-modal btn-default btn-lg" ng-click="closeCalculationDetailsModal()">
+						Закрыть
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

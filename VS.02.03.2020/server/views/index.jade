@@ -1,0 +1,38 @@
+doctype 5
+html
+    head
+        title Скородум Сервер
+        link(rel="stylesheet", href="/stylesheets/bootstrap.min.css")
+    body
+        div.container
+            div(class="panel panel-default")
+                h1
+                    div(class="panel-heading text-center")
+                        case gameState.status
+                            when 'started'
+                                p Раунд #{gameState.currentStep.dumId + 1}/#{gameState.currentStep.totalDums}, Вопрос #{gameState.currentStep.roundId + 1}/#{gameState.currentStep.totalRounds}
+                            when 'finished'
+                                p Игра завершена
+                            when 'notStarted'
+                                p Игра еще не началась
+                div(class="panel-body")
+                    table(class = "table table-condensed")
+                        thead
+                            tr
+                                th #
+                                th Стол - Команда
+                                th Последний Вопрос
+                                th Итог
+                        tbody
+                            each team, index in gameState.rating
+                                tr
+                                    td #{index + 1}
+                                    td #{team.table} - #{team.name}
+                                    td #{team.lastRoundScore}
+                                    td #{team.totalScore}
+
+                    div(class="container")
+                        form(name="restart", action="/restart", method="post")
+                            input(type="submit", class="btn btn-primary btn-lg", value="Перезапустить игру")
+
+</div>

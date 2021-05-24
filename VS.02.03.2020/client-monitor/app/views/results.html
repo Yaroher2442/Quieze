@@ -1,0 +1,74 @@
+<div class="well well-lg">
+	<h1>
+		<div ng-show="isGameEnded" class="panel-heading text-center">Результаты игры</div>
+		<div ng-show="!isGameEnded" class="panel-heading text-center">
+			Раунд {{currentStep.dumId + 1}}/{{currentStep.totalDums}},
+			Вопрос {{currentStep.roundId + 1}}/{{currentStep.totalRounds}}
+		</div>
+	</h1>
+
+	<!--<table class="table">
+		<thead>
+		<tr>
+			<th style="width: 70%"><label class="table-number">Стол</label>&nbsp;<i
+					class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;Команда
+			</th>
+			<th style="text-align: right; width: 10%" ng-show="!isGameEnded">Вопрос</th>
+			<th style="text-align: right; width: 10%">Итог</th>
+			<th style="text-align: right; width: 10%">Место</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="result in results" ng-animate="'slide'">
+			<td>
+				<label class="table-number" ng-bind-html="result.table | fixed:3"/>&nbsp;<i
+					class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{result.name}}
+			</td>
+			<td style="text-align: right" ng-show="!isGameEnded">{{result.lastRoundScore}}</td>
+			<td style="text-align: right"><strong>{{result.totalScore}}</strong></td>
+			<td style="text-align: right">{{currentPage * teamPerPage + $index + 1}}</td>
+		</tr>
+		</tbody>
+	</table> -->
+
+	<table class="table resultsTable">
+		<thead>
+			<tr>
+				<th></th>
+				<th class="yellow teamName">Команда</th>
+				<th ng-show="resultState.hasCorrect && resultState.hasBase">Базовые баллы</th>
+				<th ng-show="resultState.hasHints">Подсказки</th>
+				<th ng-show="resultState.hasExpress">Блиц</th>
+				<th ng-show="resultState.hasOneForAll">Один за всех</th>
+				<th ng-show="resultState.hasCorrectSeries">3 верных ответа подряд</th>
+				<th ng-show="resultState.hasTernaryDumDum">Единственная команда, ответившая правильно</th>
+				<th ng-show="resultState.hasZeitnot">Ставка</th>
+				<th ng-show="resultState.hasTurbo">Турбо</th>
+				<th ng-show="resultState.hasBase">За раунд</th>
+				<th>Итог</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="result in results" ng-animate="'slide'">
+				<td  class="yellow"><span>{{currentPage * teamPerPage + $index + 1}}</span></td>
+				<td class="teamName"><span>{{result.name}}</span></td>
+				<td ng-show="resultState.hasCorrect && resultState.hasBase"><span>{{result.formula.base.base}}</span></td>
+				<td ng-show="resultState.hasHints"><span ng-show="result.formula.base.hints">x</span> {{result.formula.base.hints.multiplier}}</td>
+				<td ng-show="resultState.hasExpress"><span ng-show="result.formula.express">x</span> {{result.formula.express.multiplier}}</td>
+				<td ng-show="resultState.hasOneForAll"><span ng-show="result.formula.oneForAll">x</span> {{result.formula.oneForAll.multiplier}}</td>
+				<td ng-show="resultState.hasCorrectSeries"><span ng-show="result.formula.correctSeries">x</span> {{result.formula.correctSeries.multiplier}}</td>
+				<td ng-show="resultState.hasTernaryDumDum"><span ng-show="result.formula.ternaryDumDum">x</span> {{result.formula.ternaryDumDum.multiplier}}</td>
+				<td ng-show="resultState.hasZeitnot"><span ng-show="result.formula.zeitnot.score">+ </span>{{result.formula.zeitnot.score}}</td>
+				<td ng-show="resultState.hasTurbo && result.formula.turbo.isCorrect">
+					<span ng-show="result.formula.turbo">{{result.totalScore / result.formula.turbo.multiplier}} x {{result.formula.turbo.multiplier}}</span>
+				</td>
+				<td ng-show="resultState.hasTurbo && !result.formula.turbo.isCorrect">
+					<span ng-show="result.formula.turbo">{{result.totalScore * result.formula.turbo.demultiplier}} / {{result.formula.turbo.demultiplier}}</span>
+				</td>
+				<td ng-show="resultState.hasBase"><span ng-show="!result.formula.turbo">{{result.lastRoundScore}}</span></td>
+				<td><span>{{result.totalScore}}</span></td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>

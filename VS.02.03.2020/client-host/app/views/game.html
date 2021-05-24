@@ -1,0 +1,281 @@
+<style>
+	body {
+		padding-top: 156px;
+	}
+</style>
+<div class="well well-lg well-end" ng-show="isGameEnded">
+	<div class="logo-big"></div>
+
+	<h1 class="lbl-intro text-center" ng-show="isGameEnded">Игра завершена&#0133;</h1>
+</div>
+
+<div class="row" ng-show="!isGameEnded">
+	<div class="col-xs-6">
+		<div class="well well-lg">
+			<p>
+				Раунд {{currentStepInfo.dumId + 1}}/{{scenario.dums.length}}, Вопрос
+				{{currentStepInfo.roundId + 1}}/{{scenario.dums[currentStepInfo.dumId].rounds.length}},
+				<span ng-class="{'text-danger' : roundStatus.remainingSeconds < 5}">Время: {{roundStatus.remainingSeconds | timer}}</span>
+			</p>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Вступительное слово</h3>
+				</div>
+				<div class="panel-body">
+					<div id="intro">
+						<p ng-bind-html="currentQuestion.intro | newlines"></p>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-info" ng-show="hasMedia()">
+				<div class="panel-heading">
+					<h3 class="panel-title">Медиа</h3>
+				</div>
+				<div class="panel-body">
+					<p ng-bind-html="getMediaDescription() | newlines"></p>
+				</div>
+			</div>
+
+			<div class="panel panel-info" ng-show="hasMedia2()">
+				<div class="panel-heading">
+					<h3 class="panel-title">Медиа2</h3>
+				</div>
+				<div class="panel-body">
+					<p ng-bind-html="getMedia2Description() | newlines"></p>
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div ng-repeat="next in currentQuestion.questions">
+					<div class="panel-heading">
+						<h3 class="panel-title">Вопрос</h3>
+					</div>
+					<div class="panel-body">
+						<div id="question" class="container text-center">
+							<h2>{{next.question}}</h2>
+						</div>
+					</div>
+					<div class="panel-footer">
+						<h5>Варианты ответов</h5>
+
+						<div id="options">
+							<div class="row">
+
+								<div class="col-xs-6">
+										<span class="label"
+											  ng-class="next.correctOption == 1 ? 'label-success' : 'label-default'">{{1}}.{{next.options[1]}}</span>
+										<span class="label"
+											  ng-class="next.correctOption == 3 ? 'label-success' : 'label-default'">{{3}}.{{next.options[3]}}</span>
+								</div>
+								<div class="col-xs-6">
+										<span class="label"
+											  ng-class="next.correctOption == 2 ? 'label-success' : 'label-default'">{{2}}.{{next.options[2]}}</span>
+										<span class="label"
+											  ng-class="next.correctOption == 4 ? 'label-success' : 'label-default'">{{4}}.{{next.options[4]}}</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-3"></div>
+								<div class="col-xs-6">
+										<span class="label"
+											  ng-class="next.correctOption == 0 ? 'label-success' : 'label-default'">{{next.options[0]}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<h5>Описание правильного ответа</h5>
+
+					<div id="clarification">
+						<p ng-bind-html="currentQuestion.clarification | newlines"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-6">
+		<div class="well well-lg" style="min-height: 500px">
+
+			<ul class="list-group">
+				<li class="list-group-item active">
+					<h3>
+						<small>Активный вопрос:</small>
+						{{currentQuestion.description}}
+					</h3>
+				</li>
+				<li class="list-group-item" ng-show="nextQuestion != null">
+					<h3>
+						<small>Следующий вопрос:</small>
+						{{nextQuestion.description}}
+					</h3>
+				</li>
+			</ul>
+			<div class="teams-table-placeholder">
+
+				<div id="answers" ng-show="roundStatus.step >= roundSteps.optionsShown">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Ответы команд</h3>
+						</div>
+
+						<table class="table">
+							<thead>
+							<tr>
+								<th><label class="table-number">Стол</label>&nbsp;<i
+										class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;Команда
+								</th>
+								<th>{{!isExpress() && 'Ответ' || 'Ответы'}}</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="answer in roundStatus.answers | orderBy: '$index'">
+								<td>
+									<label class="table-number" ng-bind-html="answer.teamTable | fixed:3"/>&nbsp;<i
+										class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{answer.teamName}}
+								</td>
+								<td>
+									<span ng-repeat="next in answer.selected">
+										{{isTimeout(next.value) && 'Время вышло' || next.value}}
+									</span>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div id="teamsStatus" ng-show="roundStatus.step == roundSteps.roundStarted">
+					<div class="panel panel-danger">
+						<div class="panel-heading">
+							<h3 class="panel-title">Готовность команд</h3>
+						</div>
+
+						<table class="table">
+							<thead>
+							<tr>
+								<th><label class="table-number">Стол</label>&nbsp;<i
+										class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;Команда
+								</th>
+								<th>Статус</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr ng-repeat="status in roundStatus.teamsStatus | orderBy: '$index'">
+								<td>
+									<label class="table-number" ng-bind-html="status.teamTable | fixed:3"/>&nbsp;<i
+										class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{status.teamName}}
+								</td>
+								<td>{{status.selected}}
+									<span ng-show="status.partner">
+										(
+									<b>{{status.partner.table}}</b>&nbsp;<i
+											class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{status.partner.name}}
+										)
+									</span>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<div class="affix">
+	<div id="actions">
+		<div class="row">
+			<!--<div class="col-xs-2">
+				<div ng-disabled="roundStatus.step != roundSteps.notStarted">
+					<label class="pull-right">
+						<input type="checkbox" ng-disabled="roundStatus.step != roundSteps.notStarted"
+							   ng-model="isHieEndMode">
+						HI & END
+					</label>
+				</div>
+			</div> -->
+			<div class="col-xs-12">
+				<div class="btn-group">
+					<button type="button" class="btn navbar-btn"
+							ng-disabled="roundStatus.step != roundSteps.notStarted"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.notStarted}"
+							ng-click="startRound()">
+						<i class="fa fa-flag fa-3x"></i><span>Начать Вопрос</span>
+					</button>
+					<button type="button" class="btn navbar-btn"
+							ng-show="hasMedia()"
+							ng-disabled="roundStatus.step != roundSteps.roundStarted"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.roundStarted}"
+							ng-click="showMedia()">
+						<i class="fa fa-volume-up fa-3x"
+						   style="{{(isMediaStarted() && !isMediaCompleted()) && 'color: orange'}}"></i><span>Показать медиа контент</span>
+					</button>
+					<button type="button" class="btn navbar-btn"
+							ng-disabled="roundStatus.step != roundSteps.roundStarted"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.roundStarted}"
+							ng-click="showQuestion()">
+						<i class="fa fa-question-circle fa-3x"></i><span>{{!isExpress() && 'Показать вопрос' || 'Запустить Скородум Блиц'}}</span>
+					</button>
+					<button type="button" class="btn navbar-btn"
+							ng-show="!isExpress()"
+							ng-disabled="roundStatus.step != roundSteps.questionShown"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.questionShown}"
+							ng-click="showOptions()">
+						<i class="fa fa-list-ol fa-3x"></i><span>Показать варианты</span>
+					</button>
+					<button type="button" class="btn navbar-btn"
+							ng-show="hasMedia2()"
+							ng-disabled="roundStatus.step != roundSteps.optionsShown || !roundStatus.isTimerFinished"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.optionsShown}"
+							ng-click="showMedia2()">
+						<i class="fa fa-volume-up fa-3x"
+						   style="{{(isMedia2Started() && !isMedia2Completed()) && 'color: orange'}}"></i><span>Показать медиа контент 2</span>
+					</button>
+					<button type="button" class="btn navbar-btn"
+							ng-disabled="roundStatus.step != roundSteps.optionsShown || !roundStatus.isTimerFinished"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.optionsShown}"
+							ng-click="showCorrectAnswer()">
+						<i class="fa fa-3x fa-asterisk"
+						   ng-class="{'fa-spin': (roundStatus.step == roundSteps.optionsShown) && !roundStatus.isTimerFinished}"></i>
+						<span>{{!isExpress() && 'Показать правильный ответ' || 'Показать правильные ответы'}}</span>
+					</button>
+					<button type="button" class="btn navbar-btn"
+							ng-disabled="roundStatus.step != roundSteps.correctAnswerShown"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.correctAnswerShown}"
+							ng-click="showRoundResults()">
+						<i class="fa fa-trophy fa-3x"></i><span>Показать результаты</span>
+					</button>
+					<button type="button" class="btn navbar-btn"
+							ng-show="!isLastRound()"
+							ng-disabled="roundStatus.step != roundSteps.resultsShown"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.resultsShown}"
+							ng-click="finishRound()">
+						<i class="fa fa-bullseye fa-3x"></i> <span>Завершить Вопрос</span>
+					</button>
+					<button type="button" class="btn navbar-btn"
+							ng-show="!isLastDum() && isLastRound()"
+							ng-disabled="roundStatus.step != roundSteps.resultsShown"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.resultsShown}"
+							ng-click="finishDum()">
+						<i class="fa fa-anchor fa-3x"></i><span>Завершить Раунд</span>
+					</button>
+					<button type="button" class="btn navbar-btn"
+							ng-show="isLastDum() && isLastRound()"
+							ng-disabled="roundStatus.step != roundSteps.resultsShown"
+							ng-class="{'btn-success': roundStatus.step == roundSteps.resultsShown}"
+							ng-click="finishGame()">
+						<i class="fa fa-flag-checkered fa-3x"></i><span>Завершить игру</span>
+					</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

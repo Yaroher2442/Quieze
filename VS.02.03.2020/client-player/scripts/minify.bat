@@ -1,0 +1,1 @@
+java -jar compiler.jar --js ..\assets\www\js\app.js ..\assets\www\js\controllers.js ..\assets\www\js\directives.js ..\assets\www\js\filters.js ..\assets\www\js\rest.js ..\assets\www\js\services.js ..\assets\www\js\socket.js --js_output_file ..\assets\www\js\wittendo-player-min.js

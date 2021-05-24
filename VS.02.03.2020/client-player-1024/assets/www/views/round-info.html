@@ -1,0 +1,84 @@
+<div class="round-info well well-lg">
+	<div class="panel panel-default">
+
+		<div class="panel-heading text-center">
+			<span>
+				Раунд {{currentStep.dumId + 1}}/{{currentStep.totalDums}},
+				Вопрос {{currentStep.roundId + 1}}/{{currentStep.totalRounds}}
+				<span class="label label-default" ng-show="roundState.options.isHiEndRound">Hi & End</span>
+				<span class="label label-default" ng-show="roundState.options.isExpress">Скородум Блиц</span>
+			</span>
+		</div>
+
+		<div class="panel-body">
+		<div class="col-xs-6">
+<!-- 			<button type="button"
+					ng-disabled="roundState.isOptionChosen"
+					ng-class="{'btn-pressed' : isZeitnot()}"
+					class="btn btn-primary btn-lg"
+					data-toggle="modal"
+					data-target="#choosePartnerTeamModal"
+					data-backdrop="static"
+					data-keyboard="false">
+				Ставка
+			</button> -->
+
+			<button type="button"
+					class="btn btn-primary btn-lg"
+					ng-disabled="roundState.isOptionChosen || !isOneForAllAvailable()"
+					ng-class="{'btn-pressed' : isOneForAll()}"
+					ng-click="chooseOneForAll()">
+				Один за всех
+				<span class="badge badge-lg">{{roundState.oneForAllAvailable}}</span>
+			</button>
+		</div>
+		<div class="col-xs-6">
+
+<!-- 			<button type="button"
+					class="btn btn-primary btn-lg"
+					ng-disabled="roundState.isOptionChosen || !isTurboAvailable()"
+					ng-class="{'btn-pressed' : isTurbo()}"
+					ng-click="chooseTurbo()">
+				Турбо
+				<span class="badge badge-lg">{{roundState.turboAvailable}}</span>
+			</button> -->
+
+			<button type="button"
+					class="btn btn-primary btn-lg"
+					ng-disabled="roundState.isOptionChosen"
+					ng-class="{'btn-pressed' : isSimple()}"
+					ng-click="chooseSimple()">
+				Простая игра
+			</button>
+		</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="choosePartnerTeamModal" tabindex="-1" role="dialog"
+		 aria-labelledby="choosePartnerTeamModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title" id="choosePartnerTeamModalLabel">Выберите команду</h1>
+				</div>
+				<div class="modal-body form-horizontal">
+					<label class="btn btn-modal btn-default" ng-repeat="team in roundState.otherTeams">
+						<input type="radio" ng-model="$parent.roundState.partnerTeamId" value="{{team.teamId}}">
+						<label class="table-number" ng-bind-html="team.table | fixed:3"/>&nbsp;<i
+							class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{team.name}}
+						<br/>
+					</label>
+				</div>
+				<div class="modal-footer form-horizontal">
+					<button type="button" class="btn btn-modal btn-primary btn-lg"
+							ng-class="{disabled : roundState.partnerTeamId == -1}" ng-click="chooseZeitnot()">Выбрать
+					</button>
+					<button type="button" class="btn btn-modal btn-default btn-lg" ng-click="cancelZeitnot()">Отмена
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

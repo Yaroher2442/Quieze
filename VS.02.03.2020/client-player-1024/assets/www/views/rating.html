@@ -1,0 +1,24 @@
+<div class="rating well well-lg">
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th style="text-align: right">#</th>
+            <th><label class="table-number">Стол</label>&nbsp;<i class="fa fa-long-arrow-right text-muted"
+                                                                 style="font-size: 75%;"/>&nbsp;Команда
+            </th>
+            <th style="text-align: right">Очки</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="team in teams"
+            ng-class="{success: team.teamId === currentTeamId}">
+            <td class="text-muted" style="text-align: right">{{$index + 1}}</td>
+            <td>
+                <label class="table-number" ng-bind-html="team.table | fixed:3"/>&nbsp;<i
+                    class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{team.name}}
+            </td>
+            <td style="text-align: right">{{team.totalScore}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

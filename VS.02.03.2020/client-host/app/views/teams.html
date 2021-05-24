@@ -1,0 +1,27 @@
+<div class="well well-lg">
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="width: 70%"><label class="table-number">Стол</label>&nbsp;<i
+                    class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;Команда
+            </th>
+            <th style="text-align: right; width: 10%">Вопрос</th>
+            <th style="text-align: right; width: 10%">Итог</th>
+            <th style="text-align: right; width: 10%">Место</th>
+            <th style="text-align: right; display: none">Время регистрации</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="team in teams">
+            <td>
+                <label class="table-number" ng-bind-html="team.table | fixed:3"/>&nbsp;<i
+                    class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{team.name}}
+            </td>
+            <td style="text-align: right">{{team.lastRoundScore}}</td>
+            <td style="text-align: right"><strong>{{team.totalScore}}</strong></td>
+            <td style="text-align: right">{{$index + 1}}</td>
+            <td class="text-muted" style="text-align: right; display: none">{{team.createTime | date: 'HH:mm:ss'}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

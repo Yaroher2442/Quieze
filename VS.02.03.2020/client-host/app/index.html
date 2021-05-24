@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" ng-app="wittendoHost">
+<head>
+    <meta charset="utf-8">
+    <title>Ведущий</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.css"/>
+    <link rel="stylesheet" href="css/bootstrap-override.css"/>
+    <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+
+<div id="menu" class="container" ng-controller="NavigationCtrl">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <ul class="nav nav-pills nav-justified">
+                <li ng-class="{ active : isActive('/game')}"><a href="#game" data-toggle="pill">Игра</a></li>
+                <li ng-class="{ active : isActive('/teams')}"><a href="#teams" data-toggle="pill">Рейтинг</a></li>
+                <li ng-class="{ active : isActive('/rules')}"><a href="#rules" data-toggle="pill">Правила</a></li>
+            </ul>
+
+        </div>
+    </nav>
+</div>
+<div class="container" ng-view></div>
+
+<script src="lib/socket.io.js"></script>
+<script src="lib/jquery.min.js"></script>
+<script src="lib/bootstrap.min.js"></script>
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular/angular-route.js"></script>
+<script src="lib/angular/angular-sanitize.js"></script>
+
+<!--<script src="js/app.js"></script>-->
+<!--<script src="js/services.js"></script>-->
+<!--<script src="js/controllers.js"></script>-->
+<!--<script src="js/filters.js"></script>-->
+<!--<script src="js/rest.js"></script>-->
+<!---->
+<script src="js/wittendo-host-min.js"></script>
+
+</body>
+</html>

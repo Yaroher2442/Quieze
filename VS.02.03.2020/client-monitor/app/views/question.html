@@ -1,0 +1,54 @@
+<div class="well well-lg">
+    <p class="clearfix text-center" style="font-size: 120%">Раунд {{currentStep.dumId + 1}}/{{currentStep.totalDums}},
+        Вопрос
+        {{currentStep.roundId + 1}}/{{currentStep.totalRounds}}</p>
+    <hr>
+
+    <div ng-repeat="(index, nextQuestion) in question.questionsToShow"
+         ng-class="{'three-columns': question.type === 'express' && question.questionsToShow.length > 1}">
+        <h1 class="text-center">{{nextQuestion.question}}</h1>
+        <!-- TODO: show question number in case of Express (only), also for client-player -->
+        <!--<h1 class="text-center">Время: {{questionState.remainSeconds}}</h1>-->
+
+        <div id="options" ng-show="questionState.showOptions" class="text-center">
+<!--             <div class="row">
+                <div class="col-xs-6">
+                <span class="label label-primary"
+                      ng-class="{'label-success': questionState.correctOptions[index] == 1}">{{1}}.{{nextQuestion.options[1]}}</span>
+                <span class="label label-primary"
+                      ng-class="{'label-success': questionState.correctOptions[index] == 3}">{{3}}.{{nextQuestion.options[3]}}</span>
+                </div>
+                <div class="col-xs-6">
+                <span class="label label-primary"
+                      ng-class="{'label-success': questionState.correctOptions[index] == 2}">{{2}}.{{nextQuestion.options[2]}}</span>
+                <span class="label label-primary"
+                      ng-class="{'label-success': questionState.correctOptions[index] == 4}">{{4}}.{{nextQuestion.options[4]}}</span>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col-xs-6">
+                <span class="label label-primary"
+                      ng-class="{'label-success': questionState.correctOptions[index] == 1}">{{nextQuestion.options[1]}}</span>
+                <span class="label label-primary"
+                      ng-class="{'label-success': questionState.correctOptions[index] == 3}">{{nextQuestion.options[3]}}</span>
+                </div>
+                <div class="col-xs-6">
+                <span class="label label-primary"
+                      ng-class="{'label-success': questionState.correctOptions[index] == 2}">{{nextQuestion.options[2]}}</span>
+                <span class="label label-primary"
+                      ng-class="{'label-success': questionState.correctOptions[index] == 4}">{{nextQuestion.options[4]}}</span>
+                </div>
+            </div>
+<!--             <div class="row">
+                <div class="col-xs-3"></div>
+                <div class="col-xs-6">
+                <span class="label label-primary"
+                      ng-class="{'label-success': questionState.correctOptions[index] == 0}">{{nextQuestion.options[0]}}</span>
+                </div>
+                <div class="col-xs-3"></div>
+            </div> -->
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+

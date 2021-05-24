@@ -1,0 +1,10 @@
+<div class="well well-lg">
+    <div ng-model="media" class="text-center">
+        <span ng-hide="loaded"><i class="fa fa-cog fa-6 fa-spin"></i></span>
+        <span ng-show="completed"><a class="fa fa-video-camera fa-6"></a></span>
+
+        <video media-loadeddata media-ended media-src ng-show="!completed && loaded">
+            <source ng-src="{{media.src}}"/>
+        </video>
+    </div>
+</div>

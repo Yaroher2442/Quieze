@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.phonegap.example" versionCode="10" version="1.0.5">
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>Skorodum</name>
+
+    <author href="https://build.phonegap.com" email="support@phonegap.com">
+        Skorodum
+    </author>
+
+    <access origin="*" />
+    <content src="index.html" />
+
+    <!-- <preference name="orientation" value="landscape" /> -->
+    <preference name="orientation" value="default" />
+    <preference name="fullscreen" value="true" />
+
+    <feature name="App">
+        <param name="android-package" value="org.apache.cordova.App" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.Device" />
+    </feature>
+    <feature name="NetworkStatus">
+        <param name="android-package" value="org.apache.cordova.NetworkManager" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.SplashScreen" />
+    </feature>
+    <feature name="Echo">
+        <param name="android-package" value="org.apache.cordova.Echo" />
+    </feature>
+    <feature name="Globalization">
+        <param name="android-package" value="org.apache.cordova.Globalization" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.InAppBrowser" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.FileUtils" />
+    </feature>
+    <!-- Deprecated plugins element. Remove in 3.0 -->
+    <plugins></plugins>
+
+</widget>

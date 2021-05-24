@@ -1,0 +1,173 @@
+html {
+	width: 100%;
+	height: 100%;
+}
+
+@font-face {
+	font-family: Intro; /* имя шрифта для CSS правил */
+	src: /* local("Intro"), /* проверяем наличие шрифта в ОС пользователя */ 
+	url(fonts/Intro.otf); /* если шрифт не установлен, тогда загружаем его по указанному пути */
+}
+
+@font-face {
+	font-family: 'PT Sans';
+	src: url('fonts/PTS55F_W.eot');
+	src:
+	     url('fonts/PTS55F_W.eot?#iefix') format('embedded-opentype'),
+	     url('fonts/PTS55F_W.woff') format('woff'),
+	     url('fonts/PTS55F_W.ttf') format('truetype'),
+	     url('fonts/PTS55F_W.svg#PTSans-Regular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	width: 100%;
+	/*height: 100%;*/
+	/* background: -webkit-linear-gradient(bottom, rgba(0, 173, 239, 1) 0%, rgba(0, 122, 202, 1) 100%) no-repeat fixed; */
+	/* font-family: "Segoe UI", sans-serif; */
+	font-family: "Intro", sans-serif;
+	font-size: x-large;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	/* font-family: "Segoe UI Light", sans-serif; */
+	font-family: "Intro", sans-serif;
+	font-weight: normal;
+	color: white;
+}
+
+h1 {
+	font-size: 2em;
+	background-color: #EDC951;
+	padding: 30px;
+}
+
+.monitor-container {
+	width: 100%;
+	height: 100%;
+}
+
+.monitor-container > .well {
+
+}
+
+.fa-6 {
+	font-size: 20em;
+	text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.fa-cog {
+	color: #BBB;
+	text-shadow: none;
+}
+
+audio, canvas, video {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+video {
+	width:100%;
+}
+
+#options {
+	padding: 32px;
+}
+
+#options .label {
+	font-size: 21px;
+	line-height: 120%;
+	display: block;
+	width: 100%;
+	margin: 16px 0;
+	padding: 16px 8px;
+}
+
+.intro.well {
+	margin-top: 15%;
+	padding: 64px;
+}
+
+.end.well {
+	margin-top: 15%;
+}
+
+.intro div.slogan {
+	width: 416px;
+	height: 48px;
+	margin: 16px auto;
+	background: transparent url("../img/slogan.png") no-repeat;
+	-webkit-background-size: 100%;
+}
+
+.intro div.logo-big, .end div.logo-big {
+	margin: -32px auto 64px auto;
+/*     width: 512px;
+height: 192px; */
+/* width: 318px;
+height: 252px; */
+width: 283px;
+height: 283px;
+/* background: transparent url("../img/logo-big.png"); */
+background: transparent url("../img/logo.png") 50% 50%;
+-webkit-background-size: 100%;
+}
+
+.intro .btn {
+	padding: 16px 32px;
+	font-size: 1em;
+}
+
+.table-number {
+	width: 3em;
+	text-align: right;
+	margin: 0;
+}
+
+.well-lg > .three-columns {
+	zoom: 65%;
+	float: left;
+	width: 33%;
+	border-right: 1px solid #BBB;
+}
+
+.well-lg > .three-columns:last-child {
+	border-right: none;
+}
+
+.well-lg > .three-columns h1 {
+	min-height: 240px;
+}
+
+.resultsTable {
+	/*text-transform: none !important;*/
+}
+
+.resultsTable td, .resultsTable th {
+	border: none 0 !important;
+	font-family: 'PT Sans', sans-serif;
+	font-weight: bold;
+	max-width: 200px;
+	vertical-align: baseline;
+}
+
+.resultsTable td span {
+	padding-left: 5px;
+}
+
+.resultsTable .teamName {
+	max-width: none;
+}
+
+.resultsTable th {
+	font-size: 18px;
+}
+
+.resultsTable th.yellow {
+	font-size: 24px;
+}
+
+.resultsTable .yellow {
+	color: #EDC951;
+}

@@ -1,0 +1,92 @@
+<div class="team-details well well-lg">
+    <div class="row">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-3">
+            <div class="media">
+<!--                 <a href="">
+                    <img ng-src="{{team.picture}}" alt="Портрет команды" class="img-thumbnail">
+                </a> -->
+            </div>
+        </div>
+        <div class="col-xs-7">
+            <span><strong>Название:</strong> {{team.name}}</span>&nbsp;&nbsp;&nbsp;
+            <span><strong>Стол:</strong> {{team.table}}</span>&nbsp;&nbsp;&nbsp;
+            <span><strong>Очки:</strong> {{team.totalScore}}</span>
+        </div>
+        <div class="col-xs-1"></div>
+    </div>
+    <h2>Участники</h2>
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th>Имя</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="member in team.members" ng-animate="'fade'">
+            <td class="text-center">{{$index + 1}}</td>
+            <td>{{member.name}}</td>
+            <td>{{member.email}}</td>
+            <td>
+                <button type="button" class="btn btn-link pull-right" ng-show="team.members.length > 1"
+                        ng-click="deleteTeamMember($index)">
+                    <i class="fa fa-times"></i> Удалить
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#addTeamMemberModal"
+                data-backdrop="static" data-keyboard="false"
+                ng-show="team.members.length < 6"><i class="fa fa-plus-circle"></i> Добавить еще участника
+        </button>
+
+    </div>
+
+    <div class="modal fade" id="addTeamMemberModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" ng-class="{inputFocused: registrationInputFocus}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="myModalLabel">Регистрация участника команды</h1>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label">Имя участника</label>
+
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control input-lg" placeholder="Имя участника"
+                                   ng-model="newMember.name"
+                                   ng-focus="rMemberNameFocus=true"
+                                   ng-blur="rMemberNameFocus=false">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4 control-label">Email</label>
+
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control input-lg" placeholder="Email"
+                                   ng-model="newMember.email"
+                                   ng-focus="rMemberEmailFocus=true"
+                                   ng-blur="rMemberEmailFocus=false">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-modal btn-primary btn-lg msgValidation" ng-click="addNewTeamMember()"
+                            on-blur-hide-errors>
+                         Добавить
+                    </button>
+                    <button type="button" class="btn btn-modal btn-default btn-lg" ng-click="cancelNewTeamMember()">
+                        Отмена
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

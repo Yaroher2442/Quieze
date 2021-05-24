@@ -1,0 +1,572 @@
+html {
+	height: 100%;
+}
+
+@font-face {
+	font-family: Intro; /* имя шрифта для CSS правил */
+	src: /* local("Intro"), /* проверяем наличие шрифта в ОС пользователя */ 
+		 url(fonts/Intro.otf); /* если шрифт не установлен, тогда загружаем его по указанному пути */
+  }
+
+
+body {
+	/* font-family: Roboto, sans-serif; */
+	font-family: "Intro", sans-serif;
+	/* font-size: 28px; */
+	font-size: 25px;
+	/*text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);*/
+	min-width: 1024px;
+	height: 100%;
+	/*background: rgba(0, 173, 239, 1);*/
+	/* background: #00ADEF url("../img/body-bg.png") repeat-x; */
+	word-wrap: break-word;
+}
+
+.body-bg {
+	height: 100%;
+	/*background: -webkit-linear-gradient(bottom, rgba(0, 173, 239, 1) 0%, rgba(0, 122, 202, 1) 100%) no-repeat;*/
+}
+
+h4.team-name {
+	background: white;
+	padding: 9px 16px;
+	height: 36px;
+	margin: 0;
+	border-radius: 16px 16px 0 0;
+	margin-bottom: -36px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	border-bottom: 1px solid #DDD;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	/* font-family: "Roboto Light", sans-serif; */
+	font-family: "Intro", sans-serif;
+	font-weight: normal;
+	color: black;
+}
+
+h1 {
+	/* font-size: 2em; */
+	font-size: 1em;
+	background-color: #EDC951;
+	padding: 30px;
+	text-align: center;
+	color: white;
+}
+
+.well-lg {
+	/*height: 100%;*/
+	/*min-height: 548px;*/
+}
+
+.well-lg form {
+	height: 100%;
+}
+
+.intro.well-lg {
+	/*min-height: 636px;*/	
+}
+
+.intro.well {
+	/*margin-top: 15%;
+	padding: 64px;*/
+	padding: 0;
+	margin: 0;
+}
+
+/********************/
+/* intro page start */
+.intro {
+	text-align: center;
+}
+
+div.logo-big,
+div.slogan,
+div.logo-skorodum  {
+	display: block;
+	margin: 0 auto;
+}
+
+.table-number {
+	width: 3em;
+	text-align: right;
+	margin: 0;
+}
+
+div.slogan {
+	width: 832px;
+	height: 96px;
+	margin-top: 32px;
+	background: transparent url("../img/slogan.png");
+}
+
+div.logo-big {
+	margin-top: -64px;
+	width: 1024px;
+	height: 384px;
+	/* background: transparent url("../img/logo-big.png"); */
+	background: transparent url("../img/logo.png") no-repeat 50% 50%;
+}
+div.logo-skorodum {
+	margin-top: -64px;
+	width: 1024px;
+	height: 384px;
+	/* background: transparent url("../img/logo-big.png"); */
+	background: transparent url("../img/logo-skorodum.png") no-repeat 50% 50%;
+}
+
+.btn-lg {
+	/* margin-top: 48px; */
+	margin-top: 10px;
+}
+
+h1.lbl-intro {
+	margin: 0;
+}
+
+/* intro page finish */
+/********************/
+
+div.logo {
+	width: 320px;
+	height: 112px;
+	margin-left: -34px;
+	background: transparent url("../img/logo.png");
+}
+
+div.logo-small {
+	width: 83px;
+	height: 100px;
+	margin-left: -34px;
+	background: transparent url("../img/logo-small.png");
+	float: right;
+	/* margin-left: 47%; */
+}
+
+#menu {
+
+}
+
+#menu .nav-tabs {
+	margin-top: 16px;
+	margin-bottom: 28px;
+	border-bottom: none;
+	display: inline-block;
+}
+
+#menu .nav-tabs-container {
+	text-align: center;
+}
+
+#menu .nav-tabs li {
+	/*border-bottom: 10px solid #F8AF00;*/
+}
+
+#menu .nav-tabs li.active {
+	/*border-bottom: none;*/
+}
+
+#menu .nav-tabs li a {
+	/*background: -webkit-linear-gradient(bottom, rgba(191, 191, 191, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%);*/
+	/* background: #EEE; */
+	padding: 0;
+	/* border: 12px solid #35A8E0; */
+	/*border-bottom: none;*/
+	/* margin-left: 12px; */
+	/* color: #0080BF; */
+	color: #000000;
+	font-size: 22px;
+	/* line-height: 32px; */
+	/* font-weight: bold; */
+	text-transform: uppercase;
+	/* letter-spacing: 0.02em; */
+	/* border-radius: 16px; */
+	/*box-shadow: 0 4px 0 2px rgba(0, 0, 0, 0.1);*/
+	/* text-decoration: underline; */
+	border: none;
+}
+
+#menu .nav-tabs li a:hover {
+	background: white;
+	border: none;
+	padding: 0;
+	text-decoration: underline;
+}
+
+#menu .nav-tabs li a div.brd {
+	padding: 16px 30px;
+}
+
+#menu .nav-tabs li.active a {
+	/* color: #F8AF00; */
+	background: white;
+	/* border: 12px solid #F8AF00; */
+	/*box-shadow: 0 -2px 1px 2px rgba(0, 0, 0, 0.2);*/
+	text-decoration: underline;
+}
+
+#menu .nav-tabs li.active a div.brd {
+	/* border: 2px solid #35A8E0; */
+	/* padding: 14px 0; */
+	/* border-radius: 4px; */
+}
+
+#menu li div.logo-small {
+	display: inline-block;
+	margin: 0;
+    float: none;
+    position: relative;
+    top: -17px;
+}
+
+/*team-registration*/
+div.controls-list {
+	font-size: 24px;
+	line-height: 140%;
+}
+
+div.controls-list label {
+	font-size: 24px;
+	line-height: 120%;
+}
+
+div.controls-list .input-lg {
+	font-size: 24px;
+	height: 40px;
+}
+
+div.controls-list .form-group {
+	margin-bottom: 5px;
+}
+
+div.controls-list .btn-lg {
+	font-size: 24px;
+	padding: 7px 0;
+}
+
+div.controls-list .col-xs-1 .btn-link {
+	padding: 0;
+}
+
+/*question*/
+.question .btn {
+	/*margin-bottom: 16px;*/
+	padding: 0;
+	/* height: 152px; */
+	height: 88px;
+	border-radius: 0;
+	white-space: normal;
+	background-color: #fff;
+	color: #F46A1A;
+}
+
+.question .remove-wrong-answer-buttons .btn {
+	height: 101px;
+	color: #333;
+	background-color: #DDDDDD;
+}
+
+
+.question .panel .panel-heading {
+	margin-bottom: 0;	
+}
+
+.question h3 {
+	margin: 0 32px;
+	font-size: 80%;
+	min-height: 50px;
+}
+
+.question .progress {
+	margin-top: 14px;
+}
+
+.question .modal-dialog {
+	width: 1000px;
+}
+
+.question .modal-body {
+	padding: 96px;
+}
+
+.question .modal-body h1 {
+}
+
+.question .table tr > th,
+.question .table tr > td {
+	font-size: 24px;
+}
+
+.question .answer-button-placeholder {
+	/*height: 83px;*/
+}
+
+.remove-wrong-answer-buttons .btn {
+}
+
+/*team-details*/
+.team-details {
+}
+
+.team-details .row {
+	margin: 32px 0
+}
+
+.team-details h2 {
+	margin: 0 0 0 32px
+}
+
+.team-details .table tr > th,
+.team-details .table tr > td {
+	/*padding: 4px;*/
+	font-size: 24px;
+	background: transparent;
+}
+
+.team-details .table tr > td .btn-link {
+	font-size: 18px;
+	padding: 0;
+	margin-right: 32px;
+}
+
+.team-details .modal-dialog {
+	width: 1000px;
+}
+
+/*calculation-details*/
+.question .modal-dialog {
+	width: 90%;
+}
+
+.calculation-description {
+	color: #808080;
+}
+.calculation-base {
+	color: #000000;
+}
+.calculation-hints {
+	color: red;
+}
+.calculation-allAnswersWrong {
+	color: green;
+}
+.calculation-express {
+	color: #00d6b2;
+}
+.calculation-oneForAll {
+	color: yellowgreen;
+}
+.calculation-correctSeries {
+	color: deepskyblue;
+}
+.calculation-ternaryDumDum {
+	color: orange;
+}
+.calculation-hiEnd {
+	color: chocolate;
+}
+.calculation-zeitnot {
+	color: lawngreen;
+}
+
+/*round-info*/
+.round-info {
+}
+.round-info .panel-body {
+	text-align: center;
+	/*padding: 96px 0;*/
+	padding: 0;
+}
+.round-info .btn {
+	margin: 8px;
+	padding: 30px 48px;
+}
+
+.round-info .btn .badge-lg {
+	margin: -5px 0;
+}
+.round-info .modal-dialog {
+	width: 90%;
+}
+
+.round-info .modal-footer .btn {
+	margin: 0 8px;
+}
+
+/*rating*/
+.rating {
+	height: auto !important;
+}
+
+.rating .table tr > th,
+.rating .table tr > td {
+	font-size: 24px;
+}
+
+/*rules*/
+.rules {
+	/*height: auto !important;*/
+	padding: 32px;
+}
+
+.rules h1,
+.rules h2,
+.rules h3,
+.rules h4 {
+	margin: 1em 0 0.5em 0;
+}
+
+.main-buttons {
+	margin-top: 32px;
+}
+
+.modal-dialog-center {
+	margin-top: 25%;
+}
+
+.centered {
+	text-align: center;
+}
+
+.text-right {
+	float: right;
+}
+
+.page-header {
+	margin: 20px 0 20px;
+}
+
+.game-box {
+	width: auto;
+	display: block;
+}
+
+h5 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+hr {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.well {
+	padding: 10px;
+}
+
+h1 {
+	/* font-size: 60px; */
+	margin: 20px 0;
+}
+
+h2 {
+	font-size: 48px;
+	margin: 36px 0;
+}
+
+h3 {
+	font-size: 36px;
+	margin: 24px 0;
+}
+
+/*.row, .form-group {
+	margin-right: -25px !important;
+	margin-left: -25px !important;
+}*/
+
+div[ng-view] {
+	height: 100%;
+	padding-top: 126px;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+.main-buttons {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+
+.intro .btn-primary {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+#white-space {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #fff;
+	width: 100%;
+	margin-right:20px;
+	height: 126px;
+	z-index: 1;
+}
+
+.question .col-xs-6 {
+	padding: 0;
+}
+
+.calc-details {
+	margin: 0 auto;
+}
+
+.calc-details td {
+	max-width: 175px;
+	min-width: 60px;
+	padding: 5px;
+	text-align: center;
+	color: #8CC63F;
+}
+
+.calc-details td.sum {
+	color: #F46A1A;
+}
+
+.calc-details .details-block-title td {
+	font-size: 20px; 
+	vertical-align: bottom;
+}
+
+.calc-details .details-block-num td {
+	font-size: 80px; 	
+	width: 50px;
+}
+
+.calc-details .details-block-sub td {
+	font-size: 35px; 
+	vertical-align: top;
+}
+
+.calc-details td.details-block-mult {
+	font-size: 40px; 	
+}
+
+form.inputFocused input:first-child {
+	margin-top: 5px;
+}
+
+body.inputFocused div[ng-view] {
+	padding-top: 0;
+}
+
+body.inputFocused nav, body.inputFocused #white-space, form.inputFocused .registration-header {
+	display: none !important;
+}
+
+#addTeamMemberModal.inputFocused .modal-header {
+	display: none;
+}
+
+.nowrap {
+	white-space: nowrap;
+}
+.no-max-width {
+	max-width:none !important;
+}

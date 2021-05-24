@@ -1,0 +1,22 @@
+<div class="well well-lg">
+    <h1 class="text-center">Зарегистрированные команды</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="text-align: right">#</th>
+            <th><label class="table-number">Стол</label>&nbsp;<i class="fa fa-long-arrow-right text-muted"
+                                                                 style="font-size: 75%;"/>&nbsp;Команда
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="result in results" ng-animate="'slide'">
+            <td class="text-muted" style="text-align: right">{{currentPage * teamPerPage + $index + 1}}</td>
+            <td>
+                <label class="table-number" ng-bind-html="result.table | fixed:3"/>&nbsp;<i
+                    class="fa fa-long-arrow-right text-muted" style="font-size: 75%;"/>&nbsp;{{result.name}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,27 @@
+.well-lg {
+    border-radius: 16px;
+    box-shadow: 0 -2px 3px 0 rgba(0, 0, 0, 0.3), inset 0 2px 6px 0 rgba(0, 0, 0, 0.3), 0 0 32px 6px rgba(128, 220, 255, 1);
+    /*    background: white url("../img/well-bg.png") no-repeat center center,*//* -webkit-linear-gradient(bottom, #FFF 0%, #cccdcf 100%);*/
+    border: none;
+    background: -webkit-linear-gradient(95deg, rgb(255, 255, 255) 0%, rgb(233, 233, 235) 49%, rgb(255, 255, 255) 50%, rgb(204, 205, 207) 100%);
+    color: #0068c3;
+}
+
+.list-group-item {
+    /*background: transparent;*/
+}
+
+.panel {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.panel.panel-primary {
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.panel-primary .panel-body h2 {
+}
+
+.container {
+    max-width: none;
+}

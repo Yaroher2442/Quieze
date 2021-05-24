@@ -1,0 +1,10 @@
+<div class="well well-lg">
+    <div ng-model="media" class="text-center">
+        <span ng-hide="loaded"><i class="fa fa-cog fa-6 fa-spin"></i></span>
+        <span ng-show="loaded"><a class="fa fa-music fa-6"></a></span>
+
+        <audio media-loadeddata media-ended media-src>
+            <source ng-src="{{media.src}}"/>
+        </audio>
+    </div>
+</div>
