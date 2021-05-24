@@ -2,10 +2,10 @@
 	"gameTitle":"ИГРА ДЛЯ НАХИМОВЦЕВ",
 	"hintsPerDum":4,
 	"oneForAllPerDum":2,
-	"turboPerDum":1,
+	"turboPerDum":5,
 	"dums":[
 		{
-			"name":"Пробный раунд нахимовцы",
+			"name":"тест",
 			"test":true,
 			"rounds":[
 				{
